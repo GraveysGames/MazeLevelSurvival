@@ -91,7 +91,7 @@ public class PlayerDriverMazeRunnerTest : MonoBehaviour
 
         if (Input.GetKey(runButton))
         {
-            movement = MoveInputAndCalculation(charicterStats.WalkingSpeed.Value * charicterStats.RunningSpeed.Value);
+            movement = MoveInputAndCalculation(charicterStats.WalkingSpeed.Value * charicterStats.RunningSpeedMultiplier.Value);
         }
         else if (Input.GetKey(crouchButton))
         {

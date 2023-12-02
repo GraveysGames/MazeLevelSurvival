@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6e2eefd481adf4792332b72ddd6d5d, type: 3}
+  m_Name: Test Charicter Stats
+  m_EditorClassIdentifier: 
+  baseStartingHealth: 10
+  baseMaxHealth: 10
+  baseHealthRegen: 10
+  basePhysicalResistance: 40
+  basePhysicalDamageNegation: 1
+  baseMagicResistance: 10
+  baseMagicDamageNegation: 10
+  baseWalkingSpeed: 10
+  baseRunningSpeedMultiplier: 2
+  baseCrouchWalkingSpeed: 7
+  baseJumpForce: 2
+  baseGravity: -9.81
+  baseWalkingSpeedInAir: 8
+  baseRunningSpeedMultiplierInAir: 2
+  baseCrouchWalkingSpeedInAir: 4
+  baseWalkingFallSpeed: -9.81
+  baseRunningFallSpeed: -18
+  baseCrouchWalkingFallSpeed: -15

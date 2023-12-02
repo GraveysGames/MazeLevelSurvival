@@ -16,7 +16,7 @@ public class PauseMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameEvents_SinglePlayer.current.OnWinTrigger += WinMenu;
+        //GameEvents_SinglePlayer.current.OnWinTrigger += WinMenu;
     }
 
     // Update is called once per frame
