@@ -98,12 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc69580132e1304a84e9264a48462aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gPSettings: {fileID: 11400000, guid: 4acb77cef0dac764095a8ed3b87b6690, type: 2}
   axis: 0
-  sensitivityVertical: 3
   minVerticalLookAngle: -75
   maxVerticalLookAngle: 75
-  fieldOfView: 0
-  maxRunFieldOfView: 75
+  maxRunFieldOfViewAddition: 0
   runFieldOfViewChangeOverTime: 0.15
   fieldOfViewDegradeRate: 0.25
 --- !u!114 &1159122526129408963
@@ -270,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2190600041
+  GlobalObjectIdHash: 3943111289
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -333,4 +332,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6530c1aa06f6d7546829db234575bf61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivityHorizontal: 3
+  gPSettings: {fileID: 11400000, guid: 4acb77cef0dac764095a8ed3b87b6690, type: 2}

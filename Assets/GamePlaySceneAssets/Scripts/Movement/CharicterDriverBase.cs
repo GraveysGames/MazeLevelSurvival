@@ -5,9 +5,6 @@ using Unity.Netcode;
 
 public abstract class CharicterDriverBase : NetworkBehaviour
 {
-    // SETTINGS VARIABLE
-    //Horizontal Sensitivity Varaible
-    public float sensitivityHorizontal = 3.0f;
 
 
     bool isPaused = false;
@@ -15,6 +12,8 @@ public abstract class CharicterDriverBase : NetworkBehaviour
     private CharacterController charController;
 
     private CharicterStatsController charicterStats;
+
+    [SerializeField] private GamePlaySettings gPSettings;
 
     public override void OnNetworkSpawn()
     {
@@ -182,7 +181,7 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
     protected virtual void CharicterHorizontalRotation()
     {
-        horizontalRotationAngle += Input.GetAxis("Mouse X") * sensitivityHorizontal;
+        horizontalRotationAngle += Input.GetAxis("Mouse X") * gPSettings.MouseSensitivity;
         transform.localEulerAngles = new Vector3(0, horizontalRotationAngle, 0);
     }
 
@@ -324,7 +323,7 @@ public abstract class CharicterDriverBase : NetworkBehaviour
         movement *= Time.deltaTime;
 
 
-        horizontalRotationAngle += Input.GetAxis("Mouse X") * sensitivityHorizontal;
+        horizontalRotationAngle += Input.GetAxis("Mouse X") * gPSettings.MouseSensitivity;
 
         return movement;
 

@@ -5,6 +5,8 @@ using Unity.Netcode;
 public class CameraController : NetworkBehaviour
 {
 
+    [SerializeField] private GamePlaySettings gPSettings;
+
     bool isPaused;
 
 
@@ -17,11 +19,13 @@ public class CameraController : NetworkBehaviour
             return;
         }
 
+
+
         GameFlowEvents.Current.OnPause += PauseUnPause;
 
-        fieldOfView = Camera.main.fieldOfView;
-        Debug.Log("Field of View " + fieldOfView);
+        Debug.Log("Field of View " + gPSettings.fieldOfView);
 
+        maxRunFieldOfView = gPSettings.fieldOfView + maxRunFieldOfViewAddition;
     }
 
     //************* Initialize Rotational Variables ***************************************
@@ -37,20 +41,9 @@ public class CameraController : NetworkBehaviour
     //creates a variable to hold the current axis of rotation
     public RotationalAxis axis = RotationalAxis.mouseXandY;
 
-    //Horizonatal Rotation Varaibles
-
-
-    //Keeps track if the modified view angle
-
-
-    //Virtical Rotation Varaibles
-
-    //Vertical Sensitivity Varaible
-    public float sensitivityVertical = 3.0f;
-
     //Limits the amount the player can look up or down
-    public float minVerticalLookAngle = -75.0f;
-    public float maxVerticalLookAngle = 75.0f;
+    [SerializeField] private float minVerticalLookAngle = -75.0f;
+    [SerializeField] private float maxVerticalLookAngle = 75.0f;
 
 
     //Keeps track if the modified view angle
@@ -59,13 +52,13 @@ public class CameraController : NetworkBehaviour
 
     //Field Of View Attributes
 
-    public float fieldOfView;
+    private float maxRunFieldOfView;
 
-    public float maxRunFieldOfView;
+    [SerializeField] private float maxRunFieldOfViewAddition;
 
-    public float runFieldOfViewChangeOverTime;
+    [SerializeField] private float runFieldOfViewChangeOverTime;
 
-    public float fieldOfViewDegradeRate;
+    [SerializeField] private float fieldOfViewDegradeRate;
 
     // Update is called once per frame
     void Update()
@@ -100,7 +93,7 @@ public class CameraController : NetworkBehaviour
         //transform.Rotate(0, rotationSpeed, 0);
 
         //Gets the current change in looking angle from the mouse
-        verticalRotationAngle -= Input.GetAxis("Mouse Y") * sensitivityVertical;
+        verticalRotationAngle -= Input.GetAxis("Mouse Y") * gPSettings.MouseSensitivity;
 
 
         //clamps the value between the max and min looking angle then sets that as the new rotation angle 
@@ -121,13 +114,13 @@ public class CameraController : NetworkBehaviour
         if (Input.GetKey(GameInputs.RunButton))
         {
             currentFieldOfView += runFieldOfViewChangeOverTime;
-            currentFieldOfView = Mathf.Clamp(currentFieldOfView, fieldOfView, maxRunFieldOfView);
+            currentFieldOfView = Mathf.Clamp(currentFieldOfView, gPSettings.fieldOfView, maxRunFieldOfView);
             Camera.main.fieldOfView = currentFieldOfView;
         }
         else
         {
             currentFieldOfView -= fieldOfViewDegradeRate;
-            currentFieldOfView = Mathf.Clamp(currentFieldOfView, fieldOfView, maxRunFieldOfView);
+            currentFieldOfView = Mathf.Clamp(currentFieldOfView, gPSettings.fieldOfView, maxRunFieldOfView);
             Camera.main.fieldOfView = currentFieldOfView;
         }
 
