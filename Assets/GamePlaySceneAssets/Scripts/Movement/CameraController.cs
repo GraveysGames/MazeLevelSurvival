@@ -10,7 +10,7 @@ public class CameraController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsLocalPlayer)
+        if (!IsOwner)
         {
             GetComponent<Camera>().enabled = false;
             GetComponent<AudioListener>().enabled = false;
@@ -70,7 +70,7 @@ public class CameraController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsLocalPlayer)
+        if (!IsOwner)
         {
             return;
         }

@@ -16,8 +16,12 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
     private CharicterStatsController charicterStats;
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
 
         charController = GetComponent<CharacterController>();
         charicterStats = GetComponent<CharicterStatsController>();
@@ -29,7 +33,6 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
         GameFlowEvents.Current.OnPause += PauseUnPause;
 
-        
     }
 
     /*
@@ -50,6 +53,10 @@ public abstract class CharicterDriverBase : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
 
         if (isPaused)
         {

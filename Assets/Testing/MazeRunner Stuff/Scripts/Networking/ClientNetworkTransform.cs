@@ -10,10 +10,10 @@ public class ClientNetworkTransform : Unity.Netcode.Components.NetworkTransform
     /// This imposes state to the server. This is putting trust on your clients. Make sure no security-sensitive features use this transform.
     /// </summary>
     /// 
-   /*
+
     protected override bool OnIsServerAuthoritative()
     {
         return false;
     }
-    */
+    
 }
