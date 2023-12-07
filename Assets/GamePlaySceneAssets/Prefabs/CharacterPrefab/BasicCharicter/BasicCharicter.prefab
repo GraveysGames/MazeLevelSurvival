@@ -102,7 +102,7 @@ MonoBehaviour:
   axis: 0
   minVerticalLookAngle: -75
   maxVerticalLookAngle: 75
-  maxRunFieldOfViewAddition: 0
+  maxRunFieldOfViewAddition: 15
   runFieldOfViewChangeOverTime: 0.15
   fieldOfViewDegradeRate: 0.25
 --- !u!114 &1159122526129408963
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3943111289
+  GlobalObjectIdHash: 2190600041
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0

@@ -9,7 +9,7 @@ public class MazeWinController : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameEvents_SinglePlayer.current.WinTrigger();
+            MazeEvents.Singleton.WinTrigger();
         }
     }
 }

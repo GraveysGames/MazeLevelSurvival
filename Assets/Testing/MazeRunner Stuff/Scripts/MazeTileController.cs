@@ -15,7 +15,7 @@ public class MazeTileController : MonoBehaviour
         tileId = tileCount;
         tileCount++;
         destructionTimer = StartCoroutine(DestroyTimer());
-        GameEvents_SinglePlayer.current.OnTileExtendDistruction += ExtendDistruction;
+        MazeEvents.Singleton.OnTileExtendDistruction += ExtendDistruction;
     }
 
 
@@ -34,7 +34,7 @@ public class MazeTileController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        GameEvents_SinglePlayer.current.TileDestroyedTrigger(this.transform.position);
+        MazeEvents.Singleton.TileDestroyedTrigger(this.transform.position);
 
         yield return new WaitForEndOfFrame();
 
@@ -46,7 +46,7 @@ public class MazeTileController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents_SinglePlayer.current.OnTileExtendDistruction -= ExtendDistruction;
+        MazeEvents.Singleton.OnTileExtendDistruction -= ExtendDistruction;
     }
 
 }

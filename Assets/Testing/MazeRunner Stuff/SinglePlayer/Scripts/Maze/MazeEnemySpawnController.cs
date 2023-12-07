@@ -22,7 +22,7 @@ public class MazeEnemySpawnController : MonoBehaviour
 
     [SerializeField] private Transform enemyContainer;
 
-    private Vector3 playerPosition;
+    private Dictionary<int,Vector3> playersPositions;
 
     private void Start()
     {
@@ -30,8 +30,10 @@ public class MazeEnemySpawnController : MonoBehaviour
 
         InvokeRepeating(nameof(SpawnEnemies), 3f, 5f);
 
-        GameEvents_SinglePlayer.current.OnPlayerPositionChanged += OnPlayerPositionChanged;
-        GameEvents_SinglePlayer.current.OnEnemyDeath += this.OnEnemyDeath;
+        MazeEvents.Singleton.OnPlayerPositionChanged += OnPlayerPositionChanged;
+        MazeEvents.Singleton.OnEnemyDeath += this.OnEnemyDeath;
+
+        playersPositions = new();
     }
     private void SpawnEnemies()
     {
@@ -40,7 +42,7 @@ public class MazeEnemySpawnController : MonoBehaviour
 
         foreach (MazeNodeNetwork.MazeNode node in loadedNodes)
         {
-            if (Vector3.Distance(playerPosition ,node._worldLocation) > _distanceThreshHold)
+            if (Vector3.Distance(playersPositions[0] ,node.WorldLocation) > _distanceThreshHold)
             {
                 spawnNodes.Add(node);
             }
@@ -51,7 +53,7 @@ public class MazeEnemySpawnController : MonoBehaviour
             int justSpawnedCount = 0;
             while (justSpawnedCount <= _amountOfEnemiesThatCanSpawnAtOneTime && spawnNodes.Count > 0 && _enemyCount < _maxAmountOfEnemiesInGame)
             {
-                Vector3 spawnLocation = spawnNodes[Random.Range(0, spawnNodes.Count)]._worldLocation;
+                Vector3 spawnLocation = spawnNodes[Random.Range(0, spawnNodes.Count)].WorldLocation;
                 spawnLocation.y += 4;
                 Instantiate(_enemyPrefab, enemyContainer);
                 _enemyPrefab.transform.position = spawnLocation; 
@@ -62,10 +64,17 @@ public class MazeEnemySpawnController : MonoBehaviour
 
     }
 
-    private void OnPlayerPositionChanged(Vector3 playerPosition)
+    private void OnPlayerPositionChanged(int PlayerId, Vector3 playerPosition)
     {
 
-        this.playerPosition = playerPosition;
+        if (playersPositions.ContainsKey(PlayerId))
+        {
+            playersPositions[PlayerId] = playerPosition;
+        }
+        else
+        {
+            playersPositions.Add(PlayerId, playerPosition);
+        }
 
     }
 
@@ -77,7 +86,7 @@ public class MazeEnemySpawnController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents_SinglePlayer.current.OnPlayerPositionChanged -= OnPlayerPositionChanged;
-        GameEvents_SinglePlayer.current.OnEnemyDeath -= this.OnEnemyDeath;
+        MazeEvents.Singleton.OnPlayerPositionChanged -= OnPlayerPositionChanged;
+        MazeEvents.Singleton.OnEnemyDeath -= this.OnEnemyDeath;
     }
 }

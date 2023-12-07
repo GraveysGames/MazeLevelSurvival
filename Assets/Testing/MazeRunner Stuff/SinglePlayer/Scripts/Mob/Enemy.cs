@@ -196,8 +196,8 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents_PlayerEnemyInteraction.current.OnAttackedObject -= TakeDamage;
-        GameEvents_SinglePlayer.current.EnemyDeathTrigger(enemyId);
+        //GameEvents_PlayerEnemyInteraction.current.OnAttackedObject -= TakeDamage;
+        MazeEvents.Singleton.EnemyDeathTrigger(enemyId);
     }
 
 }

@@ -12,7 +12,7 @@ public class MazeChunkLoader : MonoBehaviour
 
     [SerializeField] private MazeNodeNetwork nodeNetwork;
 
-    private Vector3 playerPosition;
+    private Dictionary<int, Vector3> playersPositions;
 
     //private bool paused;
 
@@ -23,19 +23,27 @@ public class MazeChunkLoader : MonoBehaviour
 
     private void Start()
     {
-        GameEvents_SinglePlayer.current.OnPlayerPositionChanged += OnPlayerPositionChanged;
+        MazeEvents.Singleton.OnPlayerPositionChanged += OnPlayerPositionChanged;
         SpawnedNodes = new();
 
-        InvokeRepeating("SpawnChunk", 0.1f, DELAY_BETWEEN_CHUNK_UPDATES);
+        playersPositions = new();
+
+        InvokeRepeating(nameof(SpawnChunk), 0.1f, DELAY_BETWEEN_CHUNK_UPDATES);
     }
 
+    /// <summary>
+    /// Called by the invoke repeating
+    /// </summary>
     private void SpawnChunk()
     {
-        BuildChunkTypeTendrals();
+        foreach (var player in playersPositions)
+        {
+            BuildChunkTypeTendrals(player.Value);
+        }
     }
 
 
-    private void BuildChunkTypeTendrals()
+    private void BuildChunkTypeTendrals(Vector3 playerPosition)
     {
         SpawnedNodes.Clear();
 
@@ -66,13 +74,20 @@ public class MazeChunkLoader : MonoBehaviour
 
             tendralSpawnCount++;
         }
-
     }
 
-    private void OnPlayerPositionChanged(Vector3 playerPosition)
+    private void OnPlayerPositionChanged(int PlayerId, Vector3 playerPosition)
     {
 
-        this.playerPosition = playerPosition;
+
+        if (playersPositions.ContainsKey(PlayerId))
+        {
+            playersPositions[PlayerId] = playerPosition;
+        }
+        else
+        {
+            playersPositions.Add(PlayerId, playerPosition);
+        }
 
     }
 

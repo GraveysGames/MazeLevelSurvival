@@ -21,7 +21,7 @@ public class CameraController : NetworkBehaviour
 
 
 
-        GameFlowEvents.Current.OnPause += PauseUnPause;
+        UserInterfaceEvents.Singleton.OnPauseMenu += PauseUnPause;
 
         Debug.Log("Field of View " + gPSettings.fieldOfView);
 
@@ -111,7 +111,7 @@ public class CameraController : NetworkBehaviour
     private void RunningFieldOfViewChange()
     {
         float currentFieldOfView = Camera.main.fieldOfView;
-        if (Input.GetKey(GameInputs.RunButton))
+        if (Input.GetKey(GameInputs.RunButton) && Input.GetKey(GameInputs.ForwardButton))
         {
             currentFieldOfView += runFieldOfViewChangeOverTime;
             currentFieldOfView = Mathf.Clamp(currentFieldOfView, gPSettings.fieldOfView, maxRunFieldOfView);

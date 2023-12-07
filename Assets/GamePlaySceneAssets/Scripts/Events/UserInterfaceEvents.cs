@@ -6,17 +6,17 @@ using UnityEngine;
 public class UserInterfaceEvents : MonoBehaviour
 {
 
-    public static UserInterfaceEvents Current { private set; get; }
+    public static UserInterfaceEvents Singleton { private set; get; }
 
     public void Awake()
     {
-        Current = this;
+        Singleton = this;
     }
 
-    public event Action OnPauseButtonDown;
+    public event Action<bool> OnPauseMenu;
 
-    public void OnPauseButtonDownTrigger()
+    public void PauseMenuTrigger(bool isPaused)
     {
-        OnPauseButtonDown?.Invoke();
+        OnPauseMenu?.Invoke(isPaused);
     }
 }

@@ -5,7 +5,8 @@ using Unity.Netcode;
 
 public abstract class CharicterDriverBase : NetworkBehaviour
 {
-
+    private static int playerCount = 0;
+    public int PlayerId { private set; get; }
 
     bool isPaused = false;
 
@@ -22,16 +23,16 @@ public abstract class CharicterDriverBase : NetworkBehaviour
             return;
         }
 
+        PlayerId = playerCount;
+        playerCount++;
+
         charController = GetComponent<CharacterController>();
         charicterStats = GetComponent<CharicterStatsController>();
 
-        //Makes it invisable
-        Cursor.visible = false;
-        //Locks the mouse in place
-        Cursor.lockState = CursorLockMode.Locked;
+        LockUnLockMouse(isPaused);
 
-        GameFlowEvents.Current.OnPause += PauseUnPause;
-
+        UserInterfaceEvents.Singleton.OnPauseMenu += PauseUnPause;
+        MazeEvents.Singleton.OnTeleportPlayer += TeleportPlayer;
     }
 
     /*
@@ -41,11 +42,33 @@ public abstract class CharicterDriverBase : NetworkBehaviour
     }
     */
 
-    public void TeleportPlayer(int playerId, Vector3 teleportLocation)
+    private void LockUnLockMouse(bool isPaused)
     {
-        charController.enabled = false;
-        this.transform.position = teleportLocation;
-        charController.enabled = true;
+        if (isPaused)
+        {
+            //Makes it invisable
+            Cursor.visible = true;
+            //Locks the mouse in place
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            //Makes it invisable
+            Cursor.visible = false;
+            //Locks the mouse in place
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+    }
+
+    public void TeleportPlayer(Vector3 teleportLocation)
+    {
+        if (IsOwner)
+        {
+            charController.enabled = false;
+            this.transform.position = teleportLocation;
+            charController.enabled = true;
+        }
     }
 
     private int[] kInputs;
@@ -59,14 +82,18 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
         if (isPaused)
         {
-            return;
+            kInputs = GameInputs.GetKeyBoardInputsAllZero();
         }
-
-        kInputs = GameInputs.GetKeyBoardInputs();
+        else
+        {
+            kInputs = GameInputs.GetKeyBoardInputs();
+            horizontalRotationAngle += Input.GetAxis("Mouse X") * gPSettings.MouseSensitivity;
+        }
 
         //CharicterMove(kInputs);
 
         MovementHandeler();
+        MazeEvents.Singleton.PlayerPositionChangedTrigger(PlayerId, transform.position);
     }
 
     #region movement
@@ -322,9 +349,6 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
         movement *= Time.deltaTime;
 
-
-        horizontalRotationAngle += Input.GetAxis("Mouse X") * gPSettings.MouseSensitivity;
-
         return movement;
 
     }
@@ -348,6 +372,7 @@ public abstract class CharicterDriverBase : NetworkBehaviour
     private void PauseUnPause(bool isPaused)
     {
         this.isPaused = isPaused;
+        LockUnLockMouse(isPaused);
     }
 
     protected virtual bool IsGrounded()

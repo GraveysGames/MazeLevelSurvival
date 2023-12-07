@@ -43,19 +43,19 @@ public class MazeNodeNetwork : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameEvents_SinglePlayer.current.OnTileDestroyedTrigger += OnTileDestroyed;
+        MazeEvents.Singleton.OnTileDestroyedTrigger += OnTileDestroyed;
     }
 
 
     public class MazeNode
     {
-        public FillMaze.TileType _tileType { get; private set; }
+        public FillMaze.TileType TileType { get; private set; }
         private GameObject _tilePrefab;
 
         private int _tileId;
         private static int tileCount = 0;
 
-        public Vector3 _worldLocation { get; private set; }
+        public Vector3 WorldLocation { get; private set; }
 
         private GameObject _instantiatedTile;
 
@@ -69,9 +69,9 @@ public class MazeNodeNetwork : MonoBehaviour
         #region Constructors
         public MazeNode(FillMaze.TileType tileType, GameObject tilePrefab, Vector3 worldLocation)
         {
-            _tileType = tileType;
+            TileType = tileType;
             _tilePrefab = tilePrefab;
-            _worldLocation = worldLocation;
+            WorldLocation = worldLocation;
 
             _tileId = tileCount;
             tileCount++;
@@ -88,13 +88,13 @@ public class MazeNodeNetwork : MonoBehaviour
         /// <param name="neighbor">A neighbor or this node</param>
         public void AddNeighboringNode(MazeNode neighbor)
         {
-            if (neighbor._tileType == FillMaze.TileType.path)
+            if (neighbor.TileType == FillMaze.TileType.path)
             {
                 this.NextPathNodes.Add(neighbor);
             }
             else
             {
-                if (this._tileType == FillMaze.TileType.path)
+                if (this.TileType == FillMaze.TileType.path)
                 {
                     this.NeighboringWalls.Add(neighbor);
                 }
@@ -108,7 +108,7 @@ public class MazeNodeNetwork : MonoBehaviour
             if (this._instantiatedTile == null)
             {
                 this._instantiatedTile = Instantiate(_tilePrefab) as GameObject;
-                this._instantiatedTile.transform.position = _worldLocation;
+                this._instantiatedTile.transform.position = WorldLocation;
                 this._instantiatedTile.transform.SetParent(ContentContainer);
                 this._tileId = this._instantiatedTile.GetComponent<MazeTileController>().TileId;
             }
@@ -116,7 +116,7 @@ public class MazeNodeNetwork : MonoBehaviour
             {
                 ExtendTileDestruction();
             }
-            if (_tileType == FillMaze.TileType.path)
+            if (TileType == FillMaze.TileType.path)
             {
                 InstantiateNeighboringWalls(ContentContainer);
             }
@@ -133,7 +133,7 @@ public class MazeNodeNetwork : MonoBehaviour
 
         public void ExtendTileDestruction()
         {
-            GameEvents_SinglePlayer.current.TileExtendDistructionTrigger(this._tileId);
+            MazeEvents.Singleton.TileExtendDistructionTrigger(this._tileId);
         }
 
     }

@@ -21,7 +21,7 @@ public class PlayerHudInteraction : MonoBehaviour
     {
         playerStats = GetComponent<CharicterStatsController>();
 
-        canvas = GameEvents_SinglePlayer.current.canvas;
+        canvas = MazeEvents.Singleton.canvas;
 
         Hud = Instantiate(playerHudPrefab, canvas.transform);
 
@@ -29,13 +29,13 @@ public class PlayerHudInteraction : MonoBehaviour
 
         hudController = Hud.GetComponent<PlayerHudController>();
 
-        GameEvents_SinglePlayer.current.OnUpdateCharicterHealth += UpdateHealth;
+        MazeEvents.Singleton.OnUpdateCharicterHealth += UpdateHealth;
 
     }
 
     private void OnDestroy()
     {
-        GameEvents_SinglePlayer.current.OnUpdateCharicterHealth -= UpdateHealth;
+        MazeEvents.Singleton.OnUpdateCharicterHealth -= UpdateHealth;
     }
 
     private void UpdateHealth()
