@@ -7,6 +7,7 @@ public class NetworkLobbyManager : NetworkBehaviour
 {
 
     [SerializeField] NetworkManager netManager;
+    [SerializeField] EndGame endGame;
 
 
     // Start is called before the first frame update
@@ -22,6 +23,28 @@ public class NetworkLobbyManager : NetworkBehaviour
         else
         {
             netManager.StartClient();
+        }
+
+        NetworkManager.Singleton.OnClientStopped += ServerStoped;
+
+    }
+
+    public static void DisconnectNetwork()
+    {
+        NetworkManager.Singleton.Shutdown();
+
+        if (NetworkManager.Singleton != null)
+        {
+            Destroy(NetworkManager.Singleton.gameObject);
+        }
+    }
+
+    private void ServerStoped(bool status)
+    {
+        if (true)
+        {
+            Debug.Log("Discontected");
+            endGame.GameEnded();
         }
         
     }

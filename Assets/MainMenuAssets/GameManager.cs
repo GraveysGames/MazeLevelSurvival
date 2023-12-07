@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 
     public static GameObject current;
 
-    private static int width = 100;
-    private static int height = 100;
+    private static int width = 10;
+    private static int height = 10;
 
     private static bool isSurvival = false;
 
