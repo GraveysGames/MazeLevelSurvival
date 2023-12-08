@@ -36,7 +36,7 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            GameEvents_PlayerEnemyInteraction.current.AttackedObjectTrigger(other.gameObject, damage);
+            PlayerEnemyInteractionEvents.Singleton.AttackedObjectTrigger(other.gameObject, damage);
         }
         else
         {

@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEvents_PlayerEnemyInteraction : MonoBehaviour
+public class PlayerEnemyInteractionEvents : MonoBehaviour
 {
 
-    public static GameEvents_PlayerEnemyInteraction current { get; private set; }
+    public static PlayerEnemyInteractionEvents Singleton { get; private set; }
 
     // Start is called before the first frame update
     private void Awake()
     {
-        current = this;
+        Singleton = this;
     }
 
     public Action<GameObject, float> OnAttackedObject;

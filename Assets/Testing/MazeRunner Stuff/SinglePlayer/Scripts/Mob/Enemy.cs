@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
 
         name = newName + " " + enemyId;
 
-        GameEvents_PlayerEnemyInteraction.current.OnAttackedObject += TakeDamage;
+        PlayerEnemyInteractionEvents.Singleton.OnAttackedObject += TakeDamage;
     }
 
     public void Move()

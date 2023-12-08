@@ -20,7 +20,7 @@ public class EnemyProjectileController : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameEvents_PlayerEnemyInteraction.current.AttackedObjectTrigger(other.gameObject, damage);
+            PlayerEnemyInteractionEvents.Singleton.AttackedObjectTrigger(other.gameObject, damage);
         }
         else
         {

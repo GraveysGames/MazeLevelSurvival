@@ -25,7 +25,7 @@ public class NetworkLobbyManager : NetworkBehaviour
             netManager.StartClient();
         }
 
-        NetworkManager.Singleton.OnClientStopped += ServerStoped;
+        NetworkManager.Singleton.OnClientStopped += DiscontectedFromHost;
 
     }
 
@@ -39,11 +39,10 @@ public class NetworkLobbyManager : NetworkBehaviour
         }
     }
 
-    private void ServerStoped(bool status)
+    private void DiscontectedFromHost(bool status)
     {
         if (true)
         {
-            Debug.Log("Discontected");
             endGame.GameEnded();
         }
         

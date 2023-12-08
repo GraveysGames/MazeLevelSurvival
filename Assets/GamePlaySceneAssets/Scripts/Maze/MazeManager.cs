@@ -54,6 +54,7 @@ public class MazeManager : NetworkBehaviour
         else
         {
             currentMaze.GetComponent<FillMaze>().BuildMaze(_seed.Value,mazeLocationCordinants, mazeSize);
+            Destroy(currentMaze.GetComponent<MazeEnemySpawnController>());
             Debug.Log("Seed: " + _seed.Value);
         }
         
