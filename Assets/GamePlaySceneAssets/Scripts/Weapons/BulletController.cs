@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
-{
+{ 
     public float speed = 6f;
     public float damage = 1.0f;
+
+    public bool isGhost;
 
     private Coroutine destructionCoroutine;
 
     [SerializeField] private GameObject anchor;
 
     private LayerMask layerMask;
-    private void Start()
+
+    public void Awake()
     {
-        layerMask = LayerMask.GetMask("Everything") - 2^6;
+        layerMask = LayerMask.GetMask("Everything") - 2 ^ 6;
         destructionCoroutine = StartCoroutine(DestructionTimer());
         CheckForRaycastHit();
     }
@@ -24,7 +27,6 @@ public class BulletController : MonoBehaviour
     {
         CheckForRaycastHit();
         transform.Translate(Vector3.up * speed);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,16 +38,20 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            PlayerEnemyInteractionEvents.Singleton.AttackedObjectTrigger(other.gameObject, damage);
+            if (!isGhost)
+            {
+                PlayerEnemyInteractionEvents.Singleton.AttackedObjectTrigger(other.gameObject, damage);
+            }
+            DestroyProjectile();
         }
         else
         {
-            Destroy(anchor);
+            DestroyProjectile();
         }
     }
 
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         if (destructionCoroutine != null)
         {
@@ -56,7 +62,7 @@ public class BulletController : MonoBehaviour
     private IEnumerator DestructionTimer()
     {
         yield return new WaitForSeconds(5f);
-        Destroy(anchor);
+        DestroyProjectile();
     }
 
 
@@ -70,4 +76,11 @@ public class BulletController : MonoBehaviour
         }
 
     }
+
+
+    private void DestroyProjectile()
+    {
+        Destroy(anchor);
+    }
+
 }

@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   damage: 10
+  isGhost: 0
   anchor: {fileID: 6789228355922761669}
 --- !u!54 &4054663871408404248
 Rigidbody:

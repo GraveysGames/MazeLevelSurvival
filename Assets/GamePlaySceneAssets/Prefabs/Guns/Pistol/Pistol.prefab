@@ -233,7 +233,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1334072996219298039}
-  - component: {fileID: 8717872923398933547}
+  - component: {fileID: -4830757628681835635}
+  - component: {fileID: 980369822067935053}
   m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
@@ -258,7 +259,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8717872923398933547
+--- !u!114 &-4830757628681835635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554087773921631542}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2289025751
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &980369822067935053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,11 +288,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7554087773921631542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4f5d51b2470ea44ae14c2705fc6572, type: 3}
+  m_Script: {fileID: 11500000, guid: 01da9bb03bbbaec47bf9858ade41d126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipOfBarrel: {fileID: 2406391239358156118}
-  bulletPrefab: {fileID: 6789228355922761669, guid: 49d080a08f7b166408717bb91ef76c33, type: 3}
+  _projectileStartingTransform: {fileID: 2406391239358156118}
+  _projectilePrefab: {fileID: 6789228355922761669, guid: 49d080a08f7b166408717bb91ef76c33, type: 3}
 --- !u!1 &8244520531631973971
 GameObject:
   m_ObjectHideFlags: 0

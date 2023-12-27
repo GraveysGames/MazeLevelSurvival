@@ -75,4 +75,21 @@ public class MazeEvents : MonoBehaviour
         OnEnemyDeath?.Invoke(enemyId);
     }
 
+
+    public event Action OnMazePortalEnter;
+
+    public void MazePortalEnterTrigger()
+    {
+        OnMazePortalEnter?.Invoke();
+    }
+
+
+    public event Action<int> OnItemDespawn;
+
+    public void ItemDespawnTrigger(int itemId)
+    {
+        OnItemDespawn?.Invoke(itemId);
+    }
+
+
 }

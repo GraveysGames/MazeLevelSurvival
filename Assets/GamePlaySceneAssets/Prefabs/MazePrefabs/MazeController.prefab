@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wallPrefab: {fileID: 7241590212944181547, guid: 496529bdce467594cad60769119650de, type: 3}
-  _pathPrefab: {fileID: 629779318662394534, guid: 920b35bc882744847a4446e058ec0454, type: 3}
-  _pathLightPrefab: {fileID: 8315252155854816073, guid: 5794505653e2d51428f19933608a94aa, type: 3}
+  _pathPrefab: {fileID: 5547343077949803288, guid: 7bbea099436c17447a97be2ef1a765bb, type: 3}
+  _pathLightPrefab: {fileID: 9184961250047355123, guid: 1d036d395db76b64c9da43e589abec91, type: 3}
   _lightInterval: 10
 --- !u!114 &245642145341686980
 MonoBehaviour:

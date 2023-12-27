@@ -19,4 +19,12 @@ public class UserInterfaceEvents : MonoBehaviour
     {
         OnPauseMenu?.Invoke(isPaused);
     }
+
+    public event Action<string> OnLookingAtItem;
+
+    public void LookingAtItemTrigger(string objectName)
+    {
+        OnLookingAtItem?.Invoke(objectName);
+    }
+
 }

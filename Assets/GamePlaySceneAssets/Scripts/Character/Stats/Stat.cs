@@ -5,9 +5,9 @@ using UnityEngine;
 
 public abstract class Stat
 {
-    protected string statName;
+    public string StatName { protected set; get; }
     protected string discriptionOfStat;
-    protected CharicterStats.StatLog statType;
+    public CharicterStats.StatLog StatType { protected set; get; }
     protected float baseStatValue;
     protected float baseStatMultiplier;
     protected float baseStatAddative;
@@ -19,8 +19,8 @@ public abstract class Stat
 
     public Stat(CharicterStats.StatLog typeOfStat, float baseStat)
     {
-        statName = typeOfStat.ToString();
-        statType = typeOfStat;
+        StatName = typeOfStat.ToString();
+        StatType = typeOfStat;
         baseStatValue = baseStat;
         baseStatMultiplier = 1;
         baseStatAddative = 0;
@@ -35,8 +35,8 @@ public abstract class Stat
 
     public Stat(CharicterStats.StatLog typeOfStat, float baseStat, bool hasUpdate)
     {
-        statName = typeOfStat.ToString();
-        statType = typeOfStat;
+        StatName = typeOfStat.ToString();
+        StatType = typeOfStat;
         baseStatValue = baseStat;
         baseStatMultiplier = 1;
         baseStatAddative = 0;
@@ -64,11 +64,7 @@ public abstract class Stat
     {
         for (int i = 0; i < valueOfStatChange.Length; i++)
         {
-            if (typeOfStat[i] != statType)
-            {
-                break;
-            }
-            else
+            if (typeOfStat[i] == StatType)
             {
                 switch (typeOfChange[i])
                 {
@@ -93,12 +89,14 @@ public abstract class Stat
     protected virtual void RecalculateTotalStat()
     {
         Value = totalMultiplier * ((baseStatMultiplier * (baseStatValue + baseStatAddative)) + totalAddative);
+        StatChangeEvents.Current.HudStatChangeTrigger(this);
+        Print();
     }
 
     public void Print()
     {
-        Debug.Log(statName + " Value: " + Value + "\n\t"
-                    + "statType: " + statType + "\n\t"
+        Debug.Log(StatName + " Value: " + Value + "\n\t"
+                    + "statType: " + StatType + "\n\t"
                     + "baseStatValue: " + baseStatValue + "\n\t"
                     + "baseStatMultiplier: " + baseStatMultiplier + "\n\t"
                     + "baseStatAddative: " + baseStatAddative + "\n\t"
@@ -143,7 +141,7 @@ public class StatBasic : Stat
 {
     public StatBasic(CharicterStats.StatLog typeOfStat, float baseStat) : base(typeOfStat, baseStat)
     {
-
+        RecalculateTotalStat();
     }
 }
 
@@ -156,6 +154,7 @@ public class StatCurrentHealth : Stat
 
         StatChangeEvents.Current.OnHeal += DirectUpdate;
 
+        RecalculateTotalStat();
     }
 
     /// <summary>
@@ -169,11 +168,7 @@ public class StatCurrentHealth : Stat
 
         for (int i = 0; i < valueOfStatChange.Length; i++)
         {
-            if (typeOfStat[i] != statType)
-            {
-                break;
-            }
-            else
+            if (typeOfStat[i] == StatType)
             {
                 switch (typeOfChange[i])
                 {
@@ -211,6 +206,7 @@ public class StatCurrentHealth : Stat
         {
             StatChangeEvents.Current.HealthBelowZeroTrigger(Value);
         }
+        StatChangeEvents.Current.HudStatChangeTrigger(this);
     }
 }
 
@@ -220,6 +216,8 @@ public class StatHealthRegen : Stat
     public StatHealthRegen(CharicterStats.StatLog typeOfStat, float baseStat, StatCurrentHealth ContingentStat) : base(typeOfStat, baseStat, true)
     {
         this.ContingentStat = ContingentStat;
+
+        RecalculateTotalStat();
     }
 
     protected override void Update()

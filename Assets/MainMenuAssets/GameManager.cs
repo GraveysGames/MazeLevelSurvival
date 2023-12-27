@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private static int width = 10;
     private static int height = 10;
 
-    private static bool isSurvival = false;
+    private static bool isSurvival = true;
 
     private static string scene = "Menu";
 

@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 861408850292816386}
   - component: {fileID: 3565658840996838024}
   - component: {fileID: 6247541223792496090}
-  - component: {fileID: 7944549481392274411}
   - component: {fileID: 6405453374157257445}
-  - component: {fileID: 7900543737986687861}
   - component: {fileID: -5382773105087510442}
-  - component: {fileID: 4869149673314450759}
   - component: {fileID: 6633323086754649250}
-  m_Layer: 8
+  - component: {fileID: 4869149673314450759}
+  - component: {fileID: 7900543737986687861}
+  - component: {fileID: -1492237183335574720}
+  - component: {fileID: -3560633739485490539}
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +34,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942044499379887667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 4, z: 75}
+  m_LocalPosition: {x: 15, y: 4, z: 45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -103,22 +104,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7944549481392274411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1942044499379887667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea9a53e1b2ed07498715ef9219f3201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
-  orbScalesUpAmount: 0.1
-  _playerFound: {fileID: 0}
-  _projectilePrefab: {fileID: 250699716866378260, guid: b785dd554aa2ff645976b188f5e55f2b, type: 3}
 --- !u!54 &6405453374157257445
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,20 +120,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7900543737986687861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1942044499379887667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08bb44460bd0a28499b27f476f27b7bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: {fileID: 11400000, guid: dbfd8e12a0e3d6f4f8ee728c697d2492, type: 2}
-  _itemDropChance: 100
 --- !u!114 &-5382773105087510442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +140,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &6633323086754649250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942044499379887667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4869149673314450759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +182,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &6633323086754649250
+--- !u!114 &7900543737986687861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,6 +191,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1942044499379887667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Script: {fileID: 11500000, guid: 08bb44460bd0a28499b27f476f27b7bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootPool: {fileID: 11400000, guid: cee204123abe34f4880ce2cea8b57a1e, type: 2}
+  chanceToDropItem: 100
+  itemContainer: {fileID: 0}
+--- !u!114 &-1492237183335574720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942044499379887667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4aaeb98d19dfc40bce029f0849867e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3560633739485490539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942044499379887667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2f5043e0c2b8440865abc5a2cd2ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  orbScalesUpAmount: 0.1
+  _playerFound: {fileID: 0}
+  enemyStats: {fileID: 11400000, guid: c82c192eb377a78448c7288531dbfd63, type: 2}

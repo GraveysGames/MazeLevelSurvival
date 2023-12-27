@@ -8,9 +8,21 @@ public class InteractionPopUpController : MonoBehaviour
 
     [SerializeField] private TMP_Text text;
 
+    private void Start()
+    {
+        UserInterfaceEvents.Singleton.OnLookingAtItem += DisplayPopUp;
+    }
+
     public void DisplayPopUp(string textToDisplay)
     {
-        text.text = textToDisplay + "\nPress F";
+        if (textToDisplay == null)
+        {
+            text.text = "";
+        }
+        else
+        {
+            text.text = textToDisplay + "\nPress F";
+        }
     }
 
     public void StopDisplayingPopUp()

@@ -1,34 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
+    private Dictionary<Item, int> myInventory;
 
-    public Dictionary<GameItems.Item, int> gameItems { protected set; get; }
+    private void Start()
+    {
+        InventoryEvents.Singleton.OnItemPickup += PickUpItem;
+        InventoryEvents.Singleton.OnItemDropped += DropItem;
+    }
 
     public Inventory()
     {
-        gameItems = new();
+        myInventory = new();
     }
 
-    public void AddItemToInventory(GameItems.Item item)
+    public void PickUpItem(Item item)
     {
-        gameItems[item] = gameItems.TryGetValue(item, out int value) ? ++value : 1;
+        myInventory[item] = myInventory.TryGetValue(item, out int value) ? ++value : 1;
         StatChangeEvents.Current.StatChangeTrigger(item.statTypes, item.statUpdateMethod, item.valueOfChange);
     }
 
-    public void RemoveItemToInventory(GameItems.Item item)
+    public void DropItem(Item item)
     {
-        if (gameItems.TryGetValue(item, out int value))
+        if (myInventory.TryGetValue(item, out int value))
         {
             if (value == 1)
             {
-                gameItems.Remove(item);
+                myInventory.Remove(item);
             }
             else
             {
-                gameItems[item] -= 1;
+                myInventory[item] -= 1;
             }
         }
 

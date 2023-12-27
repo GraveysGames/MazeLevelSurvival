@@ -59,4 +59,11 @@ public class StatChangeEvents : MonoBehaviour
         OnHealthBelowZero?.Invoke(healthAmount);
     }
 
+    public event Action<Stat> OnHudStatChange;
+
+    public void HudStatChangeTrigger(Stat statThatUpdated)
+    {
+        OnHudStatChange?.Invoke(statThatUpdated);
+    }
+
 }

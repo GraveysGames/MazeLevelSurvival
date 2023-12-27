@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9179931355224307589}
   - component: {fileID: 9179931355224307590}
   - component: {fileID: 9179931355224307591}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Portal
   m_TagString: Portal
   m_Icon: {fileID: 0}
@@ -112,5 +112,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 2
-  mazeManager: {fileID: 0}
   ObjectName: Portal

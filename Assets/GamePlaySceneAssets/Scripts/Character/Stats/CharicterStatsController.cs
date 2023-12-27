@@ -59,7 +59,6 @@ public class CharicterStatsController : MonoBehaviour
         CrouchWalkingFallSpeed = new(CharicterStats.StatLog.crouchWalkingFallSpeed, charicterStats.baseCrouchWalkingFallSpeed);
 
         SetupDamageHandlers();
-
     }
 
     private void SetupDamageHandlers()
@@ -68,7 +67,6 @@ public class CharicterStatsController : MonoBehaviour
         damageHandlers.Add(new CharicterDamageTaken(CharicterStats.StatType.PhysicalDamageMitigation, PhysicalResistance, PhysicalNegation, CurrentHealth));
         damageHandlers.Add(new CharicterDamageTaken(CharicterStats.StatType.MagicalDamageMitigation, MagicResistance, MagicNegation, CurrentHealth));
     }
-
 
     private void Update()
     {
