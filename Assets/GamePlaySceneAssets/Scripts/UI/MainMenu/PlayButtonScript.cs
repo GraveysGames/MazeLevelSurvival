@@ -11,4 +11,9 @@ public class PlayButtonScript : MonoBehaviour
         GameManager.NetworkMode = Host;
         SceneManager.LoadScene("GamePlayScene");
     }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("MultiplayerLobby");
+    }
 }

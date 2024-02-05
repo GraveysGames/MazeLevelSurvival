@@ -17,9 +17,14 @@ public class MazeManager : NetworkBehaviour
 
     private Vector3 startingPosition;
 
-    private NetworkVariable<int> nv_round = new NetworkVariable<int>();
+    public NetworkVariable<int> nv_seed = new NetworkVariable<int>();
 
-    private NetworkVariable<int> _seed = new NetworkVariable<int>();
+    public NetworkVariable<int> nv_round = new NetworkVariable<int>();
+
+    private int _round = 0;
+
+    private int _seed = 0;
+
 
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
@@ -27,11 +32,17 @@ public class MazeManager : NetworkBehaviour
 
         if (IsHost)
         {
-            nv_round.Value = 0;
+            _round = 0;
+            HostBuildNewMaze();
         }
-        
-        BuildNewMaze();
+        else
+        {
+            ClientBuildNewMaze(nv_seed.Value, nv_round.Value);
+        }
+
+        MazeEvents.Singleton.OnMazePortalEnter += GoneThoughPortal;
     }
+
 
     public void BuildMaze(Vector3 mazeLocationCordinants, (int, int) mazeSize)
     {
@@ -48,16 +59,18 @@ public class MazeManager : NetworkBehaviour
         if (IsHost)
         {
             currentMaze.GetComponent<FillMaze>().BuildMaze(mazeLocationCordinants, mazeSize);
-            _seed.Value = currentMaze.GetComponent<FillMaze>().Seed;
-            Debug.Log("Seed: " + _seed.Value);
+            _seed = currentMaze.GetComponent<FillMaze>().Seed;
+            Debug.Log("Seed: " + _seed);
+
+            nv_seed.Value = _seed;
+            nv_round.Value = _round;
         }
         else
         {
-            currentMaze.GetComponent<FillMaze>().BuildMaze(_seed.Value,mazeLocationCordinants, mazeSize);
+            currentMaze.GetComponent<FillMaze>().BuildMaze(_seed,mazeLocationCordinants, mazeSize);
             Destroy(currentMaze.GetComponent<MazeEnemySpawnController>());
-            Debug.Log("Seed: " + _seed.Value);
+            Debug.Log("Seed: " + _seed);
         }
-        
 
         startingPosition = currentMaze.GetComponent<MazeStartAndEnd>().FindStartAndEnd();
 
@@ -72,12 +85,15 @@ public class MazeManager : NetworkBehaviour
         MazeEvents.Singleton.OnPlayerPositionChanged -= PlayerReadyToBeTeleported;
     }
 
-    public void BuildNewMaze()
+    public void HostBuildNewMaze()
     {
-        if (IsHost)
+        if (!IsHost)
         {
-            nv_round.Value++;
+            return;
         }
+
+        _round++;
+
         if (GameManager.current != null)
         {
             height = GameManager.Height;
@@ -89,15 +105,64 @@ public class MazeManager : NetworkBehaviour
             Destroy(currentMaze);
         }
 
-        BuildMaze(Vector3.zero, (width + (nv_round.Value * 5), height + (nv_round.Value * 5)));
+        BuildMaze(Vector3.zero, (width + (_round * 5), height + (_round * 5)));
+    }
 
+    public void ClientBuildNewMaze(int seed, int round)
+    {
+        if (IsHost)
+        {
+            return;
+        }
+
+        this._seed = seed;
+        this._round = round;
+
+        if (GameManager.current != null)
+        {
+            height = GameManager.Height;
+            width = GameManager.Width;
+        }
+
+        if (currentMaze != null)
+        {
+            Destroy(currentMaze);
+        }
+
+        BuildMaze(Vector3.zero, (width + (_round * 5), height + (_round * 5)));
+
+    }
+
+    private void GoneThoughPortal()
+    {
+        if (IsHost)
+        {
+            NextStageClientRpc(_seed, _round);
+        }
+        else
+        {
+            NextStageServerRpc();
+        }
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            BuildNewMaze();
+            MazeEvents.Singleton.MazePortalEnterTrigger();
         }
+    }
+
+    [ClientRpc]
+    private void NextStageClientRpc(int seed, int round)
+    {
+        ClientBuildNewMaze(seed, round);
+    }
+
+    [ServerRpc (RequireOwnership = false)]
+    private void NextStageServerRpc()
+    {
+        HostBuildNewMaze();
+        NextStageClientRpc(_seed, _round);
     }
 }

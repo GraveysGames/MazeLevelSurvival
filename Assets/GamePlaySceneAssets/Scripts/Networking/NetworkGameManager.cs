@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class NetworkLobbyManager : NetworkBehaviour
+public class NetworkGameManager : NetworkBehaviour
 {
 
     [SerializeField] NetworkManager netManager;
@@ -13,8 +13,6 @@ public class NetworkLobbyManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
 
         if (GameManager.NetworkMode)
         {

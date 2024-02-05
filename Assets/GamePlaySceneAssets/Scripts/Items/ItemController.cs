@@ -14,6 +14,42 @@ public class ItemController : MonoBehaviour
         ItemId = itemSpawnCount;
         itemSpawnCount++;
         MazeEvents.Singleton.OnItemDespawn += DespawnItem;
+        SetUpObject();
+    }
+
+    private void SetUpObject()
+    {
+        if (!GetComponent<Collider>())
+        {
+            MeshCollider meshC = this.gameObject.AddComponent<MeshCollider>();
+            meshC.convex = true;
+        }
+
+        if (!GetComponent<Rigidbody>())
+        {
+            this.gameObject.AddComponent<Rigidbody>();
+        }
+        
+
+    }
+
+
+    private float groundHeight = 0;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            groundHeight = transform.position.y;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (transform.position.y < groundHeight)
+        {
+            transform.position = new(transform.position.x, groundHeight, transform.position.z);
+        }
     }
 
     public string GetItemName()

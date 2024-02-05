@@ -35,7 +35,7 @@ public class PlayerAgroController : MonoBehaviour
             else
             {
                 //ping new enemy to agro
-                //enemyCollider.GetComponent<EnemyStatsController>().AgroEnemy(this.gameObject);
+                enemyCollider.GetComponent<EnemyAgroController>().Agro(this.gameObject);
             }
 
         }
@@ -45,7 +45,7 @@ public class PlayerAgroController : MonoBehaviour
             //ping enemy lost agro
             if (previousEnemyCollider != null)
             {
-                //previousEnemyCollider.GetComponent<EnemyStatsController>().DeAgro(this.gameObject);
+                previousEnemyCollider.GetComponent<EnemyAgroController>().DeAgro(this.gameObject);
             }
         }
 

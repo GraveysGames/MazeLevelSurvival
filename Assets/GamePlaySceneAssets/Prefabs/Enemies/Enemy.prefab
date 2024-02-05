@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 7900543737986687861}
   - component: {fileID: -1492237183335574720}
   - component: {fileID: -3560633739485490539}
+  - component: {fileID: 7849203525784676293}
+  - component: {fileID: 4070711127557166682}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -209,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4aaeb98d19dfc40bce029f0849867e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgroController: {fileID: 7849203525784676293}
 --- !u!114 &-3560633739485490539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +224,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2f5043e0c2b8440865abc5a2cd2ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  orbScalesUpAmount: 0.1
-  _playerFound: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: c82c192eb377a78448c7288531dbfd63, type: 2}
+--- !u!114 &7849203525784676293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942044499379887667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56debfc40ba81c4f80c105056ece40a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4070711127557166682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942044499379887667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2609089d814f6fd489db8a0f9c4008fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgroController: {fileID: 7849203525784676293}
+  projectilePrefab: {fileID: 250699716866378260, guid: b785dd554aa2ff645976b188f5e55f2b, type: 3}

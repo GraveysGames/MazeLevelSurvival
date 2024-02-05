@@ -17,6 +17,8 @@ public abstract class Stat
 
     public bool HasUpdate { protected set; get; }
 
+    protected Stat contingentStat = null;
+
     public Stat(CharicterStats.StatLog typeOfStat, float baseStat)
     {
         StatName = typeOfStat.ToString();
@@ -29,6 +31,24 @@ public abstract class Stat
         Value = baseStat;
         HasUpdate = false;
 
+        StatChangeEvents.Current.OnStatChange += this.UpdateStat;
+        //StatChangeEvents.Current.OnStatChangeOverTime += this.OverTime;
+    }
+
+    public Stat(CharicterStats.StatLog typeOfStat, float baseStat, Stat contingentStat)
+    {
+        StatName = typeOfStat.ToString();
+        StatType = typeOfStat;
+        baseStatValue = contingentStat.Value;
+        baseStatMultiplier = baseStat;
+        baseStatAddative = 0;
+        totalAddative = 0;
+        totalMultiplier = 1;
+        Value = baseStat;
+        HasUpdate = false;
+        this.contingentStat = contingentStat;
+
+        StatChangeEvents.Current.OnStatChange += this.UpdateStatContingent;
         StatChangeEvents.Current.OnStatChange += this.UpdateStat;
         //StatChangeEvents.Current.OnStatChangeOverTime += this.OverTime;
     }
@@ -86,11 +106,24 @@ public abstract class Stat
         }
 
     }
+
+    protected virtual void UpdateStatContingent(CharicterStats.StatLog[] typeOfStat, CharicterStats.MethodOfUpdatingStats[] typeOfChange, float[] valueOfStatChange)
+    {
+        for (int i = 0; i < valueOfStatChange.Length; i++)
+        {
+            if (typeOfStat[i] == contingentStat.StatType)
+            {
+                baseStatValue = contingentStat.Value;
+                RecalculateTotalStat();
+            }
+        }
+    }
+
+
     protected virtual void RecalculateTotalStat()
     {
         Value = totalMultiplier * ((baseStatMultiplier * (baseStatValue + baseStatAddative)) + totalAddative);
         StatChangeEvents.Current.HudStatChangeTrigger(this);
-        Print();
     }
 
     public void Print()
@@ -140,6 +173,11 @@ public abstract class Stat
 public class StatBasic : Stat
 {
     public StatBasic(CharicterStats.StatLog typeOfStat, float baseStat) : base(typeOfStat, baseStat)
+    {
+        RecalculateTotalStat();
+    }
+
+    public StatBasic(CharicterStats.StatLog typeOfStat, float baseStat, Stat contingentStat) : base(typeOfStat, baseStat, contingentStat)
     {
         RecalculateTotalStat();
     }
@@ -212,17 +250,17 @@ public class StatCurrentHealth : Stat
 
 public class StatHealthRegen : Stat
 {
-    private StatCurrentHealth ContingentStat;
+    private StatCurrentHealth statToChange;
     public StatHealthRegen(CharicterStats.StatLog typeOfStat, float baseStat, StatCurrentHealth ContingentStat) : base(typeOfStat, baseStat, true)
     {
-        this.ContingentStat = ContingentStat;
+        this.statToChange = ContingentStat;
 
         RecalculateTotalStat();
     }
 
     protected override void Update()
     {
-        ContingentStat.DirectUpdate(Value);
+        statToChange.DirectUpdate(Value);
     }
 }
 

@@ -58,7 +58,7 @@ public class MazeStartAndEnd : MonoBehaviour
 
         instantiatedObjectTemporaryHolder.transform.position = playerEndPos;
 
-        playerStartPos.y += 4;
+        playerStartPos.y += 6;
         return playerStartPos;
     }
 

@@ -51,8 +51,8 @@ public class CharicterStatsController : MonoBehaviour
         JumpForce = new(CharicterStats.StatLog.jumpHeight, charicterStats.baseJumpForce);
         Gravity = new(CharicterStats.StatLog.gravity, charicterStats.baseGravity);
 
-        WalkingSpeedInAir = new(CharicterStats.StatLog.walkingSpeedInAir, charicterStats.baseWalkingSpeedInAir);
-        RunningSpeedMultiplierInAir = new(CharicterStats.StatLog.runningSpeedMultiplierInAir, charicterStats.baseRunningSpeedMultiplierInAir);
+        WalkingSpeedInAir = new(CharicterStats.StatLog.walkingSpeedInAir, charicterStats.baseWalkingSpeedInAir, WalkingSpeed);
+        RunningSpeedMultiplierInAir = new(CharicterStats.StatLog.runningSpeedMultiplierInAir, charicterStats.baseRunningSpeedMultiplierInAir, RunningSpeedMultiplier);
         CrouchWalkingSpeedInAir = new(CharicterStats.StatLog.crouchWalkingSpeedInAir, charicterStats.baseCrouchWalkingSpeedInAir);
         WalkingFallSpeed = new(CharicterStats.StatLog.walkingFallSpeed, charicterStats.baseWalkingFallSpeed);
         RunningFallSpeed = new(CharicterStats.StatLog.runningFallSpeed, charicterStats.baseRunningFallSpeed);

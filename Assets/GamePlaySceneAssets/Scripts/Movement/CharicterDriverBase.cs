@@ -77,6 +77,7 @@ public abstract class CharicterDriverBase : NetworkBehaviour
     {
         if (!IsOwner)
         {
+            MazeEvents.Singleton.PlayerPositionChangedTrigger(PlayerId, transform.position);
             return;
         }
 
@@ -94,6 +95,16 @@ public abstract class CharicterDriverBase : NetworkBehaviour
 
         MovementHandeler();
         MazeEvents.Singleton.PlayerPositionChangedTrigger(PlayerId, transform.position);
+
+        //correct fall through floor
+        if (transform.position.y < -3)
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.y = 6;
+            transform.position = newPosition;
+        }
+
+
     }
 
     #region movement

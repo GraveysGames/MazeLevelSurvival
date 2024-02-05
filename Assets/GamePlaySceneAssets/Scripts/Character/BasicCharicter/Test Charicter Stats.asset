@@ -24,8 +24,8 @@ MonoBehaviour:
   baseCrouchWalkingSpeed: 7
   baseJumpForce: 2
   baseGravity: -9.81
-  baseWalkingSpeedInAir: 8
-  baseRunningSpeedMultiplierInAir: 2
+  baseWalkingSpeedInAir: 1
+  baseRunningSpeedMultiplierInAir: 1
   baseCrouchWalkingSpeedInAir: 4
   baseWalkingFallSpeed: -9.81
   baseRunningFallSpeed: -18

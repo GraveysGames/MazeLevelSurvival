@@ -29,6 +29,7 @@ public class StatChangeEvents : MonoBehaviour
         OnStatChange?.Invoke(statToChange, typeOfChange, valueOfChange);
     }
 
+    //when an item is 
     public event Action OnStatUpdate;
 
     private void StatUpdateTrigger()

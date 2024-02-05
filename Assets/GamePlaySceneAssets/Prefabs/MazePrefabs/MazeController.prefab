@@ -127,10 +127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 1942044499379887667, guid: 5f8a0f6a81b13144f8e36d34ffabc5e0, type: 3}
   _enemyCount: 0
-  _maxAmountOfEnemiesInGame: 10
-  _maxAmountOfEnemiesAroundPlayer: 5
-  _distanceThreshHold: 20
-  _amountOfEnemiesThatCanSpawnAtOneTime: 3
+  _maxAmountOfEnemiesInGame: 30
+  _maxAmountOfEnemiesAroundPlayer: 10
+  _distanceThreshHold: 40
+  _amountOfEnemiesThatCanSpawnAtOneTime: 5
   enemyContainer: {fileID: 2489899374053035097}
 --- !u!1 &245642145959249455
 GameObject:

@@ -62,7 +62,6 @@ public class MazeEnemySpawnController : MonoBehaviour
                 Vector3 spawnLocation = spawnNodes[Random.Range(0, spawnNodes.Count)].WorldLocation;
                 spawnLocation.y += 4;
                 newEnemy = Instantiate(_enemyPrefab, spawnLocation, new Quaternion(0,0,0,0));
-                //newEnemy.transform.position = spawnLocation;
                 newEnemy.GetComponent<NetworkObject>().Spawn(true);
                 justSpawnedCount++;
                 _enemyCount++;

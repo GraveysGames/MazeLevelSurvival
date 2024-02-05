@@ -7,6 +7,8 @@ public class ProjectileController : NetworkBehaviour
 {
     [SerializeField] private Transform _projectileStartingTransform;
     [SerializeField] private GameObject _projectilePrefab;
+    private bool isPaused = false;
+
 
     [SerializeField] private float warmup;
     private float warmUpProgress;
@@ -16,10 +18,19 @@ public class ProjectileController : NetworkBehaviour
     //warmup
     //cooldown
 
+    private void Start()
+    {
+        UserInterfaceEvents.Singleton.OnPauseMenu += PauseUnPause;
+    }
+
     private void Update()
     {
         if (IsOwner)
         {
+            if (isPaused)
+            {
+                return;
+            }
             ProjectileUpdate();
         }
     }
@@ -114,6 +125,11 @@ public class ProjectileController : NetworkBehaviour
         {
             SpawnProjectileGhost(position, rotation);
         }
+    }
+
+    private void PauseUnPause(bool isPaused) 
+    {
+        this.isPaused = isPaused;
     }
 
 }
